@@ -54,7 +54,7 @@
 2. Enter a name for your pipeline (e.g., "Infrastructure=Job") and select "Pipeline" as the project type. Click "OK".
 3. In the pipeline configuration page, scroll down to the "Pipeline" section.
 4. Select "Pipeline script" from the "Definition" dropdown menu.
-5. Copy and paste the following pipeline script into the script text area:jenkins-file.
+5. Copy and paste the following pipeline script into the script text area:jenkins-pipeline.
 6. Then apply and save.
 7. Go to plugiun and install pipeline:stage view plugin.
 8. Now, click on "Build with Parameters" to start the pipeline.
