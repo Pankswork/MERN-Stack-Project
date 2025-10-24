@@ -33,20 +33,23 @@
 2. type sudo su Ubuntu
 3. type htop to check the system performance.
 4. CHeck the installed tools: git, nodejs, npm, mongodb, nginx, docker, docker-compose, jenkins.
-
+5. Dont close SSM now we will setup jenkins server.
+ 
 # login to jenkins
 1. Open your web browser and navigate to `http://<your-ec2-public-ip>:8080`. 
 2. For login to jenkins you will be needing a password.
-3. To retrieve the initial admin password type systemctl jenkins.service status and copy the password from there.
+3. To retrieve the initial admin password type:
+   -systemctl jenkins.service status
 4. Paste the password into the "Administrator password" field on the Jenkins setup page and click "Continue".  
 5. Follow the on-screen instructions to complete the Jenkins setup - install suggested plugins, create the first admin user, and configure the instance settings.
 6. Once the setup is complete, you will be redirected to the Jenkins dashboard where you can start creating and managing your Jenkins jobs.
-7. UNder mangae jenkins go to plugins install aws credentials and aws pipeline.
-8. Under manage jenkins go to configure system and add aws credentials with access key and secret key.
-9. Go plugin and install terraform plugin.
-10. Go to tools then add terraform installation then add terraform then install directory /usr/local/bin/terraform.
+7. Under mangae jenkins go to plugins install aws credentials pipeline: aws steps.
+8. Under manage jenkins go to credentials then global and add aws credentials with access key and secret key(we anohter option here thats why we insyalled aws credentials plugin).
+   - need to add aws access key and secret key with admin permission.
+9.  We need to configure Terraform for our jenkins server so go under manage jenkins then plugin and install terraform plugin.
+10. Go to tools then add terraform then install directory /usr/bin/terraform. 
 
-# Create a Jenkins Pipeline for MERN Application Deployment
+# Create a Jenkins Pipeline for Infrastructure Deployment.
 1. In the Jenkins dashboard, click on "New Item".
 2. Enter a name for your pipeline (e.g., "Infrastructure=Job") and select "Pipeline" as the project type. Click "OK".
 3. In the pipeline configuration page, scroll down to the "Pipeline" section.
@@ -73,7 +76,8 @@
 1. After connecting to the jump host instance, switch to the root user by typing `sudo su -`.
 2. Install kubectl by following the official Kubernetes documentation or by running the following commands:
    ```
-   curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+   curl -LO "https://dl.k8s.io/release/$(curl -L -s
+# Create a Jenkins Pipeline for MERN Application Deploymen https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
    chmod +x kubectl
    mv kubectl /usr/local/bin/
    ```
