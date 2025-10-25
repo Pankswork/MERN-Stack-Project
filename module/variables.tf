@@ -1,8 +1,8 @@
-variable "mern-stack-cluster" {}
+variable "cluster-name" {}
 variable "cidr-block" {}
-variable "mern-stack-vpc" {}
+variable "vpc-name" {}
 variable "env" {}
-variable "mern-igw" {}
+variable "igw-name" {}
 variable "pub-subnet-count" {}
 variable "pub-cidr-block" {
   type = list(string)
