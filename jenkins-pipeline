@@ -24,21 +24,24 @@ pipeline {
                 git branch: 'master', url: 'https://github.com/Pankswork/MERN-Stack-Project.git'
             }
         }
-        stage('Init') {
-            steps {
-                withCredentials([[
-                    $class: 'AmazonWebServicesCredentialsBinding', 
-                    credentialsId: 'aws-credentials'
-                ]]) {
-                    sh 'terraform -chdir=eks/ init'
-                }
-            }
-        }
+       stage('Init') {
+          steps {
+             withCredentials([[
+                $class: 'AmazonWebServicesCredentialsBinding', 
+                credentialsId: 'aws-cred'
+             ]]) {
+                 sh '''
+                     rm -rf eks/.terraform
+                     terraform -chdir=eks/ init -reconfigure
+                 '''
+             }
+          }
+       }
         stage('Validate') {
             steps {
                 withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding', 
-                    credentialsId: 'aws-credentials'
+                    credentialsId: 'aws-cred'
                 ]]) {
                     sh 'terraform -chdir=eks/ validate'
                 }
@@ -48,7 +51,7 @@ pipeline {
             steps {
                 withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding', 
-                    credentialsId: 'aws-credentials'
+                    credentialsId: 'aws-cred'
                 ]]) {
                     script {    
                         if (params.Terraform_Action == 'plan') {
