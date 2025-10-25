@@ -44,8 +44,13 @@ variable "addons" {
     version = string
   }))
 }
-variable "ondemand_instance_types" {}
-variable "spot_instance_types" {}
+variable "ondemand_instance_types" {
+  default = ["t3.small"]
+}
+
+variable "spot_instance_types" {
+  default = ["t3.small"]
+}
 variable "desired_capacity_on_demand" {}
 variable "min_capacity_on_demand" {}
 variable "max_capacity_on_demand" {}

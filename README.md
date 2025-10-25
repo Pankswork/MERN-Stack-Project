@@ -58,7 +58,7 @@
 6. Then apply and save.
 7. Go to plugiun and install pipeline:stage view plugin.
 8. Now, click on "Build with Parameters" to start the pipeline.
-9. SET ENVIRENMENT NAME dev and TERRAFORMA ACTION apply then click on build.
+9. Once the pipeline is completed SET ENVIRENMENT NAME dev and TERRAFORMA ACTION apply then click on build.
 
 # Create a Jump Host to access the private EC2 instances
 1. Launch a new EC2 instance in the public subnet of your VPC to act as a jump host.
