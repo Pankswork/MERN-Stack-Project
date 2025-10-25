@@ -25,18 +25,16 @@ pipeline {
             }
         }
        stage('Init') {
-          steps {
-             withCredentials([[
-                $class: 'AmazonWebServicesCredentialsBinding', 
-                credentialsId: 'aws-cred'
-             ]]) {
-                 sh '''
-                     rm -rf eks/.terraform
-                     terraform -chdir=eks/ init -reconfigure
-                 '''
+             steps {
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-cred']]) {
+                    sh '''
+                        rm -rf eks/.terraform eks/.terraform.lock.hcl
+                        terraform -chdir=eks/ init -reconfigure
+                    '''
              }
-          }
-       }
+        }
+    }
+
         stage('Validate') {
             steps {
                 withCredentials([[
