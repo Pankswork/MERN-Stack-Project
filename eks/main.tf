@@ -29,19 +29,22 @@ module "eks" {
 
   eks-sg                = var.eks_sg
 
-  is-eks-role-enabled           = true
-  is-eks-nodegroup-role-enabled = true
+  # IAM role flags (module variables use underscores)
+  is_eks_role_enabled           = true
+  is_eks_nodegroup_role_enabled = true
 
-  ondemand-instance-types       = var.ondemand_instance_types
-  spot-instance-types           = var.spot_instance_types
+  # Node group instance types (module variables use underscores)
+  ondemand_instance_types       = var.ondemand_instance_types
+  spot_instance_types           = var.spot_instance_types
 
-  desired-capacity-on-demand    = var.desired_capacity_on_demand
-  min-capacity-on-demand        = var.min_capacity_on_demand
-  max-capacity-on-demand        = var.max_capacity_on_demand
+  # Node group capacity settings (module variables use underscores)
+  desired_capacity_on_demand    = var.desired_capacity_on_demand
+  min_capacity_on_demand        = var.min_capacity_on_demand
+  max_capacity_on_demand        = var.max_capacity_on_demand
 
-  desired-capacity-spot         = var.desired_capacity_spot
-  min-capacity-spot             = var.min_capacity_spot
-  max-capacity-spot             = var.max_capacity_spot
+  desired_capacity_spot         = var.desired_capacity_spot
+  min_capacity_spot             = var.min_capacity_spot
+  max_capacity_spot             = var.max_capacity_spot
 
   is-eks-cluster-enabled        = var.is_eks_cluster_enabled
   cluster-version               = var.cluster_version
@@ -50,3 +53,4 @@ module "eks" {
 
   addons = var.addons
 }
+
