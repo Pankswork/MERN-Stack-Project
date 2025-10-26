@@ -47,7 +47,19 @@
 8. Under manage jenkins go to credentials then global and add aws credentials with access key and secret key(we anohter option here thats why we insyalled aws credentials plugin).
    - need to add aws access key and secret key with admin permission.
 9.  We need to configure Terraform for our jenkins server so go under manage jenkins then plugin and install terraform plugin.
-10. Go to tools then add terraform then install directory /usr/bin/terraform. 
+10. Go to tools then add terraform then install directory /usr/bin/terraform.
+11. Need to Create S3 bucket and dynamodb manually:
+   - aws s3api create-bucket \
+  --bucket mern-stack-panks \
+  --region us-east-1
+
+  aws dynamodb create-table \
+  --table-name Lock-Files \
+  --attribute-definitions AttributeName=LockID,AttributeType=S \
+  --key-schema AttributeName=LockID,KeyType=HASH \
+  --billing-mode PAY_PER_REQUEST
+
+
 
 # Create a Jenkins Pipeline for Infrastructure Deployment.
 1. In the Jenkins dashboard, click on "New Item".
@@ -63,10 +75,10 @@
 # Create a Jump Host to access the private EC2 instances
 1. Launch a new EC2 instance in the public subnet of your VPC to act as a jump host.
 2. Choose an Amazon Machine Image (AMI) - Select " Ubuntu Server 22.04 LTS (HVM), SSD Volume Type".
-3. Choose an Instance Type - Select "t2.micro" (eligible for free tier).
+3. Choose an Instance Type - Select "t2.small" (eligible for free tier).
 4. Proceed without key pair for now beause we will use SSM to connect.
 5. Chose your vpc.
-6. Select the public subnet.
+6. Select the new vpc and public subnet.
 7. Under advanced details, Select UAM profile with admin access.
 8. In user data, add the following script to install necessary tools:tools-install-jump.sh.
 9. then review and launch the instance.
