@@ -89,34 +89,76 @@
 2. Install kubectl by following the official Kubernetes documentation or by running the following commands:
    ```
    curl -LO "https://dl.k8s.io/release/$(curl -L -s
-# Create a Jenkins Pipeline for MERN Application Deploymen https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    Create a Jenkins Pipeline for MERN Application Deploymen https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
    chmod +x kubectl
    mv kubectl /usr/local/bin/
    ```
 3. Verify the installation by running `kubectl version --client`.
+4. Run this command to update kubeconfig:
+   aws eks update-kubeconfig --name dev-ap-medium-eks-cluster --region us-east-1
+5. Do aws configure and credentials.
+6. Do kubectl get nodes to check.
+
 
 # To create a load balancer.
-1. we need an iamserviceaccount with necessary permission.
-2. install helm on jump host.
+   For ingress controller to create a LB meaning use aws resource we need to have this.
+1. we need an iamserviceaccount with necessary permission.(change account and cluster name)
 
-#create argocd namespace
-kubectl create namespace argocd
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.4.7/manifests/install.yaml
-to access argocd server from outside we need to:
--change the service type from clusterIP to LoadBalancer:
-  kubectl edit svc argocd-server -n argocd     
--Copy dns name and paste it in browser.   
--get the initial admin password:
-  kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+   Fethcing policy:-
+   curl -O https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.5.4/docs/install/iam_policy.json
+
+   aws iam create-policy --policy-name AWSLoadBalancerControllerIAMPolicy --policy-document file://iam_policy.json
+
+   eksctl create iamserviceaccount --cluster=dev-ap-medium-eks-cluster --namespace=kube-system --name=aws-load-balancer-controller --role-name AmazonEKSLoadBalancerControllerRole --attach-policy-arn=arn:aws:iam::668227158023:policy/AWSLoadBalancerControllerIAMPolicy --approve --region=us-east-1 --override-existing-serviceaccounts
+
+2.  Helm is required to deploy ingress controller and argocd.
+    Add helm repo and install:
+      sudo snap install helm --classic
+      helm repo add eks https://aws.github.io/eks-charts
+      helm repo update eks
+      helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=dev-ap-medium-eks-cluster --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller
+3. to check pods are running or not:
+      kubectl get deployment -n kube-system aws-load-balancer-controller
+
+# create argocd namespace
+1. kubectl create namespace argocd
+2. kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.4.7/manifests/install.yaml
+3. To access argocd server from outside we need to:
+      -change the service type from clusterIP to LoadBalancer:
+         kubectl edit svc argocd-server -n argocd     
+      -Copy dns name and paste it in browser.   
+      -get the initial admin password:
+         kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+4. User is admin and password you will get from above command.
 
 # COnfigure sonarQube in jenkins(Currentlt running in jenkins server itself)      
-1. on jenkins server type docker ps to check the running containers.
+1. On jenkins server type docker ps to check the running containers.
 2. sonarQube is running in docker container on port 9000.
-3. type curl ipconfig.me to get public ip of jenkins server.
+3. type curl ifconfig.me to get public ip of jenkins server.
 4. Open your web browser and navigate to `http://<jenkins-server-public-ip>:9000`.
 5. Login with default credentials (username: admin, password: admin).
 6. Follow the video instructions to configure sonarQube with jenkins and project repository..
 
+# Setup Sonarqube
+1. We have to Connect jenkins to sonarqube so we have to create a token first.
+2. Go administraion>security>user>below token>update token.
+3. Go to configuration>webhook>create>name=jenkins,url:http://54.89.127.138:8080/sonarqube-webhook/(webhook to to let external party know that analysis is done)
+4. Now to to create project, First we will create for frontend: go to project>manually>name and key =frontend and branch=main.
+5.Analyze your project> give your exixting token>others>linux>copy the code and save it.
+5. Now for backend, do the same and save the code.
+6. Save sonarqube token and aws account id in jenkins.
+  kind=secret text ,ID=sonar-token
+  kind=secret text ,ID=ACCOUNT_ID
+
+# Create ECR repo for frontend and backend repo
+1. Go to ECR >create>private>frontend.
+2. Same for backend.
+3. Go jenkins credentials create credentials secret text > secret=frontend>ID=ECR_REPO1.
+4. secret text > secret=backend>ID=ECR_REPO2.
+5. user and password >user=pankswork>ID=GITHUB-APP
+6. Go to plugins and install Docekr,Docker commons,docker pipeline and docker api,sonarqube scanner,nodejs,owasp dependency check.
+7. Go to Tools>nodejs,install auto>DP-Check,install-auto git,docker,install auto docker.com>sonar-scanner,install-auto
+8. Connect webhook with jenkins, go to system >sonarqube install>sonar-server,http://54.89.127.138:9000,select credentials for sonar then apply ans save.
 
 # Setup Argocd for Project.
 1. Create new repo using https.
