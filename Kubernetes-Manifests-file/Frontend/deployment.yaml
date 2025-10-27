@@ -28,7 +28,7 @@ spec:
         image: 668227158023.dkr.ecr.us-east-1.amazonaws.com/frontend:3
         imagePullPolicy: Always
         env:
-            - name: REACT_APP_BACKEND_URL
-              value: "http://backend.three-tier.svc.cluster.local:8080/api/tasks"
+          - name: REACT_APP_BACKEND_URL
+            value: "http://k8s-threetie-mainlb-805ca14174-1319122579.us-east-1.elb.amazonaws.com/api/tasks"
         ports:
         - containerPort: 3000
