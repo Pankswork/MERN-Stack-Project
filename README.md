@@ -146,9 +146,10 @@
 4. Now to to create project, First we will create for frontend: go to project>manually>name and key =frontend and branch=main.
 5.Analyze your project> give your exixting token>others>linux>copy the code and save it.
 5. Now for backend, do the same and save the code.
-6. Save sonarqube token and aws account id in jenkins.
+6. Save sonarqube token, aws account id github in jenkins.
   kind=secret text ,ID=sonar-token
   kind=secret text ,ID=ACCOUNT_ID
+  kind=secret text ,ID=github
 
 # Create ECR repo for frontend and backend repo
 1. Go to ECR >create>private>frontend.
@@ -159,6 +160,10 @@
 6. Go to plugins and install Docekr,Docker commons,docker pipeline and docker api,sonarqube scanner,nodejs,owasp dependency check.
 7. Go to Tools>nodejs,install auto>DP-Check,install-auto git,docker,install auto docker.com>sonar-scanner,install-auto
 8. Connect webhook with jenkins, go to system >sonarqube install>sonar-server,http://54.89.127.138:9000,select credentials for sonar then apply ans save.
+
+# create Jenkins Frontend and backend pipelines.
+1. New item >Three-tier-frontend>pipeline>copy jenkinsfile-frontend
+2. New item >Three-tier-frontend>pipeline>copy jenkinsfile-frontend
 
 # Setup Argocd for Project.
 1. Create new repo using https.
