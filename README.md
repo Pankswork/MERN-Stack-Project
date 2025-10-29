@@ -319,4 +319,7 @@ helm install grafana grafana/grafana
 6. Change the service type from ClusterIP to LoadBalancer and save the file.
 7. Now copy load balancers dns and paste it in browser to access prometheus and grafana server.
 
+## IMAGES
+
+# Jenkins:
    
