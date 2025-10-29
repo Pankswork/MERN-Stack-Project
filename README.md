@@ -322,4 +322,27 @@ helm install grafana grafana/grafana
 ## IMAGES
 
 # Jenkins:
-   
+
+<img width="1894" height="1063" alt="Screenshot 2025-10-28 035458" src="https://github.com/user-attachments/assets/b675d40a-ba96-4575-9e97-5a9ac96194b6" />
+
+<img width="1885" height="1059" alt="Screenshot 2025-10-28 035641" src="https://github.com/user-attachments/assets/5b70953b-5e13-4c3c-81f4-580538bfd52a" />
+
+<img width="1898" height="1044" alt="Screenshot 2025-10-28 035758" src="https://github.com/user-attachments/assets/bfbb3fdf-ee18-49df-858d-d11e127eede2" />
+
+# ArgoCD:
+
+
+<img width="1907" height="1051" alt="Screenshot 2025-10-28 035956" src="https://github.com/user-attachments/assets/7783159a-cefe-4924-9f5d-addd3340d492" />
+
+<img width="1905" height="1062" alt="Screenshot 2025-10-28 035905" src="https://github.com/user-attachments/assets/1e1915bf-2ad6-4e39-a410-b734c71883af" />
+
+#Sonarqube
+
+<img width="1908" height="1060" alt="Screenshot 2025-10-28 035823" src="https://github.com/user-attachments/assets/f14db11c-d5bb-4c02-9b66-ead1e501d28e" />
+
+# Todo-App
+
+<img width="1887" height="1060" alt="Screenshot 2025-10-28 040102" src="https://github.com/user-attachments/assets/f77c8f09-3ff0-4783-bd8a-860e99c7d2e6" />
+
+<img width="1897" height="1053" alt="Screenshot 2025-10-28 040019" src="https://github.com/user-attachments/assets/07e1e08d-1710-4061-b13f-9a49881a281d" />
+
